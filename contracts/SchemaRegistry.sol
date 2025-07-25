@@ -3,12 +3,12 @@ pragma solidity ^0.8.28;
 
 /**
  * @title SchemaRegistry
- * @dev Smart Contract for Polygon Schema Methods
+ * @dev Smart Contract for Schema Methods
  */
 contract SchemaRegistry {
     mapping(address _id => mapping(string schemaId => string schema)) public schemas;
 
-    event SchemaCreate(address indexed id, string schemaId, string schemaJson);
+    event SchemaCreate(address indexed id, string schemaId);
 
     /*
      * @dev Creates a new schema.
@@ -19,8 +19,8 @@ contract SchemaRegistry {
         string memory newSchemaId,
         string memory _json
     ) external {
-        require(schemas[msg.sender][newSchemaId].length == 0, "NOT_ALLOWED");
+        require(bytes(schemas[msg.sender][newSchemaId]).length == 0, "NOT_ALLOWED");
         schemas[msg.sender][newSchemaId] = _json;
-        emit SchemaCreate(msg.sender, newSchemaId, _json);
+        emit SchemaCreate(msg.sender, newSchemaId);
     }
 }
