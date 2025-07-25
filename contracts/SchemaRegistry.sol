@@ -19,6 +19,7 @@ contract SchemaRegistry {
         string memory newSchemaId,
         string memory _json
     ) external {
+        require(schemas[msg.sender][newSchemaId].length == 0, "NOT_ALLOWED");
         schemas[msg.sender][newSchemaId] = _json;
         emit SchemaCreate(msg.sender, newSchemaId, _json);
     }
